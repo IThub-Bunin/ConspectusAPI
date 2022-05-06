@@ -11,6 +11,7 @@ project.lock.json
 *.userosscache
 *.sln.docstates
 
+[Ss]torage/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
