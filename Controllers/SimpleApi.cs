@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.IO;
 
 namespace ConspectusAPI.Controllers;
 
@@ -16,12 +15,6 @@ public class SimpleApi : ControllerBase
         _storageController = storageController;
     }
 
-    [HttpGet("isitworks_qm")]
-    public string IsItWork()
-    {
-        return "Hello! Conspectus api works!";
-    }
-
     [HttpGet("UserExist/{name}")]
     public async ValueTask<bool> UserExist(string name)
     {
@@ -35,7 +28,7 @@ public class SimpleApi : ControllerBase
         
         if (await _storageController.UserExist(name))
         {
-            return Ok(string.Join(',', await _storageController.GetConspectsNameByUser(name)));
+            return Ok(string.Join('>', await _storageController.GetConspectsNameByUser(name)));
         }
 
         return NotFound();
@@ -51,9 +44,31 @@ public class SimpleApi : ControllerBase
 
         Console.WriteLine($"User {user} - {await _storageController.UserExist(user)}");
         Console.WriteLine($"User {conspect} - {await _storageController.ConspectExist(user, conspect)}");
-        Console.WriteLine($"Path: {_storageController._storagePath + user + '/' + conspect + ".md"}");
+        Console.WriteLine($"Path: {_storageController.StoragePath + user + '/' + conspect + ".md"}");
 
 
         return NotFound();
+    }
+
+    [HttpPost("SetConspectData/{user}/{conspect}/{data}")]
+    public async void SetConspectData(string user, string conspect, string data)
+    {
+        if (await _storageController.ConspectExist(user, conspect))
+        {
+            _storageController.SetConspectData(user, conspect, data);
+        }
+    }
+
+    // TODO: CreateUser & CreateConspect
+    [HttpPost("CreateUser/{user}")]
+    public async void CreateUser(string user)
+    {
+        await _storageController.CreateUser(user);
+    }
+
+    [HttpPost("CreateConspect/{user}/{conspect}")]
+    public async void CreateConspect(string user, string conspect)
+    {
+        await _storageController.CreateConspect(user, conspect);
     }
 }
