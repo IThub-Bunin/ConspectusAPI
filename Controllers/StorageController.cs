@@ -57,7 +57,7 @@ public class StorageController : IStorageController
 
     public async Task CreateConspect(string userName, string conspectName)
     {
-        await Task.Run(() => File.Create(StoragePath + userName + "/" + conspectName));
+        await Task.Run(() => File.Create(StoragePath + userName + "/" + conspectName + ".md"));
     }
 
     class FileDoesNotExistException : SystemException
