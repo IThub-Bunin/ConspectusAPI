@@ -1,5 +1,5 @@
 using ConspectusAPI.Controllers;
-
+using Microsoft.AspNetCore.Cors;
 
 
 
@@ -11,6 +11,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IStorageController, StorageController>();
 
 var app = builder.Build();
+
+app.UseCors(builder =>
+{
+    builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
