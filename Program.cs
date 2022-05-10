@@ -17,8 +17,7 @@ app.UseCors(builder =>
     builder
     .AllowAnyOrigin()
     .AllowAnyMethod()
-    .AllowAnyHeader()
-    .AllowCredentials();
+    .AllowAnyHeader();
 });
 
 // Configure the HTTP request pipeline.
